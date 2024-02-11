@@ -26,7 +26,7 @@ This project is a React Native app that allows users to input text prompts and g
 
 ## Installation
 
-1. Clone the repository: `git clone https://github.com/ritikranjan12/`
+1. Clone the repository: `git clone https://github.com/ritikranjan12/regmgpt.git`
 2. Install dependencies: `npm install`
 3. Run the app: `npm start`
 
