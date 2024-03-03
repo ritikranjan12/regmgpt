@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useState,useEffect} from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Link, Tabs } from 'expo-router';
-import { Pressable } from 'react-native';
+import { Tabs } from 'expo-router';
+import * as LocalAuthentication from "expo-local-authentication";
 
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
@@ -17,7 +17,28 @@ function TabBarIcon(props: {
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  useEffect(() => {
+    authenticate();
+  }, []);
 
+  const authenticate = async () => {
+    const hasBiometricHardware = await LocalAuthentication.hasHardwareAsync();
+    if (hasBiometricHardware) {
+      const isEnrolled = await LocalAuthentication.isEnrolledAsync();
+      if (isEnrolled) {
+        const result = await LocalAuthentication.authenticateAsync();
+        if (result.success) {
+          console.log("Biometric authentication successful");
+        } else {
+          authenticate();
+        }
+      } else {
+        authenticate();
+      }
+    } else {
+      console.log("Biometric hardware not available");
+    }
+  };
   return (
     <Tabs
       screenOptions={{
@@ -29,29 +50,15 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
+          title: 'Ask me',
+          tabBarIcon: ({ color }) => <TabBarIcon name="comment-o" color={color} />,
         }}
       />
       <Tabs.Screen
         name="two"
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Chat',
+          tabBarIcon: ({ color }) => <TabBarIcon name="envelope" color={color} />,
         }}
       />
     </Tabs>

@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "regmgpt1",
-    "slug": "regmgpt1",
+    "name": "regmgpt",
+    "slug": "regmgpt",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -16,13 +16,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ritikranjan12.regmgpt1"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.ritikranjan12.regmgpt1"
     },
     "web": {
       "bundler": "metro",
@@ -34,6 +36,11 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      }
     }
   }
 }
